@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  jupyter:
+    image: jupyter/datascience-notebook
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+    volumes:
+      - type: bind
+        source: ./notebooks
+        target: /home/jovyan/work
+        read_only: false
+      - type: bind
+        source: ./notebooks/datasets
+        target: /home/jovyan/work/datasets
+        read_only: false
+      - type: bind
+        source: ./requirements.txt
+        target: /home/jovyan/requirements.txt
+        read_only: true
+      - type: bind
+        source: ./configure_environment.sh
+        target: /usr/local/bin/before-notebook.d/configure_environment.sh
+        read_only: true
+    ports:
+      - 8888:8888
